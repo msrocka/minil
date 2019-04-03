@@ -1,7 +1,7 @@
 # minil
 `minil` is a minimalistic language for describing test LCI models. It can be
 converted to the [openLCA JSON-LD format](https://github.com/GreenDelta/olca-schema)
-or to [Julia](https://julialang.org/) script using the `minil` command line tool:
+or to a [Julia](https://julialang.org/) script using the `minil` command line tool:
 
 ```bash
 $ minil <file>
