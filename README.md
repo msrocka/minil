@@ -33,7 +33,7 @@ Identifier = Letter, {Character - Whitespace}
 ```
 
 `minil` knows three types of flows: products, wastes, and elementary flows. The
-flow type is identified by the first letter of an identifier. Idenfifiers that
+flow type is identified by the first letter of an identifier. Identifiers that
 start with the letter `p` (or `P`) are recognized as product flows (e.g. `p1`).
 When the first letter is a `w` (or `W`) it is recognized as a waste flow
 (e.g. `w1`). All other identifiers are recognized as elementary flows
@@ -64,7 +64,7 @@ Output = ProductIdentifier | WasteIdentifier, "->", Number, Identifier
 
 The line `p2 -> 0.8 w1` describes an output of `0.8` units of the waste flow 
 `w1` related to the product flow `p2`. Finally, each line that starts with a
-`#` is ignored as comment.
+`#` is a comment.
 
 ```ebnf
 Comment = "#", {Character}
@@ -76,8 +76,8 @@ For each product and waste flow a corresponding process with the same identifier
 is created. For product flows, an output and for waste flows an input is added
 as reference flow to that process. By default the amount of this reference
 flow is set to `1.0` but it can be set to another value via an input or
-output relation, e.g. sets the amount of the reference flow to `2.0` units of
-inputs of the waste flow `w1`:
+output relation, e.g. the following sets the amount of the reference flow to
+`2.0` units `w1`:
 
 ```r
 w1 <- 2.0 w1
@@ -92,8 +92,8 @@ example above looks like the following in openLCA:
 
 ## Building from source
 This is a simple Go project with dependencies to `github.com/google/uuid`
-and `github.com/msrocka/ld` for generating UUIDs. You can build and
-test it with the following steps when you have Go installed:
+and `github.com/msrocka/ld`. You can build and test it with the following steps
+when you have Go installed:
 
 ```bash
 git clone https://github.com/msrocka/minil.git
