@@ -71,6 +71,23 @@ func parseLine(i int, line string) *Rel {
 		Right:   right}
 }
 
+const (
+	olcaFormat  = 0
+	juliaFormat = 1
+)
+
+func getFormat(args []string) int {
+	if len(args) < 3 {
+		return olcaFormat
+	}
+	for i := 2; i < len(args); i++ {
+		if args[i] == "--julia" {
+			return juliaFormat
+		}
+	}
+	return olcaFormat
+}
+
 func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("ERROR: no file given")
@@ -108,7 +125,14 @@ func main() {
 		return
 	}
 
-	fmt.Println("Convert", len(rels), "relations ...")
-	toOlca(os.Args[1], rels)
+	fmt.Println("Found", len(rels), "relations ...")
 
+	format := getFormat(os.Args)
+	if format == olcaFormat {
+		fmt.Println("Create olca-schema package ...")
+		toOlca(os.Args[1], rels)
+	} else if format == juliaFormat {
+		fmt.Println("Create Julia file ...")
+		toJulia(os.Args[1], rels)
+	}
 }
