@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"path/filepath"
-	"strings"
-	"time"
 
 	"github.com/google/uuid"
 	"github.com/msrocka/ld"
@@ -56,9 +53,7 @@ func toOlca(origin string, rels []*Rel) {
 				"FlowProperty", "93a60a56-a3c8-11da-a746-0800200b9a66", "Mass")})
 	}
 
-	outPath := filepath.Base(origin)
-	outPath = outPath + "_olca_" + time.Now().Format(time.RFC822) + ".zip"
-	outPath = strings.ReplaceAll(strings.ReplaceAll(outPath, ":", "_"), " ", "_")
+	outPath := outputFile(origin, "_olca.zip")
 	fmt.Println("Write data to", outPath)
 
 	w, err := ld.NewPackWriter(outPath)
