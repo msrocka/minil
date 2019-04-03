@@ -87,5 +87,19 @@ In the resulting JSON-LD package the units of all inputs and outputs are set
 to kilogram mass using the UUIDs from the openLCA reference data. The converted
 example above looks like the following in openLCA:
 
+![](./example_olca.png)
 
 
+## Building from source
+This is a simple Go project with dependencies to `github.com/google/uuid`
+and `github.com/msrocka/ld` for generating UUIDs. You can build and
+test it with the following steps when you have Go installed:
+
+```bash
+git clone https://github.com/msrocka/minil.git
+cd minil
+go get github.com/google/uuid
+go get github.com/msrocka/ld
+go build
+minil example.minil
+```

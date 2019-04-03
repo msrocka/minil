@@ -108,4 +108,7 @@ func main() {
 		return
 	}
 
+	fmt.Println("Convert", len(rels), "relations ...")
+	toOlca(os.Args[1], rels)
+
 }
