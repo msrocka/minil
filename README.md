@@ -1,14 +1,19 @@
 # minil
 `minil` is a minimalistic language for describing test LCI models. It can be
 converted to the [openLCA JSON-LD format](https://github.com/GreenDelta/olca-schema)
-using the `minil` command line tool:
+or to [Julia](https://julialang.org/) script using the `minil` command line tool:
 
 ```bash
-$ minil [input file]
+$ minil <file>
 ```
 
-This will produce a zip file that can be imported into
-[openLCA](http://www.openlca.org/).
+This will read the given `file` and produce a zip file that can be imported into
+[openLCA](http://www.openlca.org/). To produce a Julia script, you can append
+the `--julia` flag:
+
+```bash
+$ minil <file> --julia
+```
 
 
 ## Syntax
@@ -89,6 +94,58 @@ example above looks like the following in openLCA:
 
 ![](./example_olca.png)
 
+When converting into a Julia script (via the `--julia` flag), the input and
+output relations are translated to standard LCI matrices. The example above
+will be translated to the following code:
+
+```julia
+# ref is the index of the reference flow
+# of the product system; 1 is the default value
+ref = 1
+
+# the technology matrix
+A = [
+     1.00  -0.50   0.00  ;  # p1
+     0.00   1.00   0.00  ;  # p2
+     0.00   0.80  -2.00  ;  # w1
+]
+println("\n\nA = ")
+display(A)
+
+# the intervention matrix
+B = [
+     2.20   0.00   3.40  ;  # e1
+     0.00   0.00  -1.20  ;  # r1
+]
+println("\n\nB = ")
+display(B)
+
+# the final demand
+f = zeros(size(A)[1])
+f[ref] = 1.0
+println("\n\nf = ")
+display(f)
+
+# the scaling vector
+s = A \ f
+println("\n\ns = ")
+display(s)
+
+# the LCI result
+g = B * s
+println("\n\ng = ")
+display(g)
+```
+
+Changing the reference flow to `ref = 2` in this script and running it with
+the Julia interpreter should give the following inventory result:
+
+```julia
+g = [
+  2.46 ; # e1
+ -0.48 ; # r1
+]
+```
 
 ## Building from source
 This is a simple Go project with dependencies to `github.com/google/uuid`
