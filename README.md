@@ -14,7 +14,8 @@ This will produce a zip file that can be imported into
 ## Syntax
 `minil` looks like this:
 
-```minil
+```r
+# a simple example
 p1 -> 2.2 e1
 p2 <- 0.5 p1
 p2 -> 0.8 w1
@@ -62,10 +63,29 @@ Output = ProductIdentifier | WasteIdentifier, "->", Number, Identifier
 ```
 
 The line `p2 -> 0.8 w1` describes an output of `0.8` units of the waste flow 
-`w1` related to the product flow `p2`.
+`w1` related to the product flow `p2`. Finally, each line that starts with a
+`#` is ignored as comment.
+
+```ebnf
+Comment = "#", {Character}
+```
 
 
 ## Conversion
 For each product and waste flow a corresponding process with the same identifier
 is created. For product flows, an output and for waste flows an input is added
-as reference flow to that process. 
+as reference flow to that process. By default the amount of this reference
+flow is set to `1.0` but it can be set to another value via an input or
+output relation, e.g. sets the amount of the reference flow to `2.0` units of
+inputs of the waste flow `w1`:
+
+```r
+w1 <- 2.0 w1
+```
+
+In the resulting JSON-LD package the units of all inputs and outputs are set
+to kilogram mass using the UUIDs from the openLCA reference data. The converted
+example above looks like the following in openLCA:
+
+
+

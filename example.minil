@@ -1,3 +1,4 @@
+# a simple example
 p1 -> 2.2 e1
 p2 <- 0.5 p1
 p2 -> 0.8 w1
