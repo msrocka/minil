@@ -71,7 +71,11 @@ func toJulia(origin string, rels []*Rel) {
 				val = rowVals[col]
 			}
 			if row == col && val == 0.0 {
-				val = 1.0
+				if isWaste(products[row]) {
+					val = -1.0
+				} else {
+					val = 1.0
+				}
 			}
 			t := fmt.Sprintf("%.2f  ", val)
 			if val >= 0 {
